@@ -14,10 +14,10 @@ import ru.gildor.coroutines.retrofit.await
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class GetPublicReposUnitTest {
+class GetPublicRepositoriesUnitTest {
 
     @Test
-    fun testGetPublicReposWithTwoElements() {
+    fun testGetPublicRepositoriesWithTwoElements() {
         val expectedRepos = Gson().fromJson<List<PublicRepositoriesResponse>>(TestConstants.FIRST_PAGE, object : TypeToken<List<PublicRepositoriesResponse>>(){}.type)
         val actualRepos = AndroidChallengeService.getService()
         val reposList = runBlocking { actualRepos.getPublicRepos("xing", 1, 2).await() }
@@ -25,7 +25,7 @@ class GetPublicReposUnitTest {
     }
 
     @Test
-    fun testGetPublicReposWithError() {
+    fun testGetPublicRepositoriesWithError() {
         val actualRepos = AndroidChallengeService.getService()
         try {
             runBlocking { actualRepos.getPublicRepos("xoang", 1, 2).await() }
