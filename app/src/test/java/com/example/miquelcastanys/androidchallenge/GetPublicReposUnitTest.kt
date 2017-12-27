@@ -18,10 +18,21 @@ class GetPublicReposUnitTest {
 
     @Test
     fun testGetPublicReposWithTwoElements() {
-        val expectedRepos = Gson().fromJson<List<PublicRepositoriesResponse>>(TestConstants.firstPage, object : TypeToken<List<PublicRepositoriesResponse>>(){}.type)
+        val expectedRepos = Gson().fromJson<List<PublicRepositoriesResponse>>(TestConstants.FIRST_PAGE, object : TypeToken<List<PublicRepositoriesResponse>>(){}.type)
         val actualRepos = AndroidChallengeService.getService()
         val reposList = runBlocking { actualRepos.getPublicRepos("xing", 1, 2).await() }
         assert(reposList == expectedRepos)
+    }
+
+    @Test
+    fun testGetPublicReposWithError() {
+        val actualRepos = AndroidChallengeService.getService()
+        try {
+            runBlocking { actualRepos.getPublicRepos("xoang", 1, 2).await() }
+        } catch (e: HttpException) {
+            assert(e.response().message() == TestConstants.ERROR_MESSAGE)
+
+        }
     }
 
 }

@@ -1,7 +1,7 @@
 package com.example.miquelcastanys.androidchallenge
 
 object TestConstants {
-    val firstPage = "[" +
+    val FIRST_PAGE = "[" +
             "  {" +
             "    \"id\": 2399148," +
             "    \"name\": \"absurdity\"," +
@@ -190,8 +190,6 @@ object TestConstants {
             "    \"default_branch\": \"master\"" +
             "  }" +
             "]"
-    val notFoundError = "{\n" +
-            "  \"message\": \"Not Found\",\n" +
-            "  \"documentation_url\": \"https://developer.github.com/v3/repos/#list-user-repositories\"\n" +
-            "}"
+
+    val ERROR_MESSAGE = "Not Found"
 }
