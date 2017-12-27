@@ -1,5 +1,6 @@
 package com.example.miquelcastanys.androidchallenge.domain.data.source
 
+import com.example.miquelcastanys.androidchallenge.domain.DomainConstants
 import com.example.miquelcastanys.androidchallenge.domain.data.api.AndroidChallengeService
 import com.example.miquelcastanys.androidchallenge.domain.model.PublicRepositoriesResponse
 import retrofit2.Call
@@ -14,17 +15,17 @@ class AndroidChallengeSourceImpl : AndroidChallengeSource {
         publicRepos.enqueue(object : Callback<List<PublicRepositoriesResponse>>{
 
             override fun onResponse(call: Call<List<PublicRepositoriesResponse>>?, response: Response<List<PublicRepositoriesResponse>>?) {
-                if (response?.code() == 200) {
+                if (response?.code() == DomainConstants.REQUEST_CODE_OK) {
                     if (response.body() != null)
                         callback.onGetPublicRepositoriesResponse(response.body()!!)
                     else
-                        callback.onGetError(404)
+                        callback.onGetError(DomainConstants.REQUEST_CODE_NOT_FOUND)
                 } else
                     callback.onGetError(response?.code())
             }
 
             override fun onFailure(call: Call<List<PublicRepositoriesResponse>>?, t: Throwable?) =
-                callback.onGetError(500)
+                callback.onGetError(DomainConstants.REQUEST_CODE_UNKNOWN_ERROR)
         })
     }
 }
