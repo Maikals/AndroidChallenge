@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_public_repositories_list.*
 class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.View {
 
     private var mListener: ActivityFragmentCommunicationInterface? = null
-    private lateinit var presenter: PublicRepositoriesContract.Presenter
+    private var presenter: PublicRepositoriesContract.Presenter? = null
 
     companion object {
         val TAG = "PublicReposListFragment"
@@ -39,6 +39,7 @@ class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.Vi
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
+        presenter?.start()
     }
 
     private fun setRecyclerView() {
@@ -57,6 +58,8 @@ class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.Vi
     override fun onDetach() {
         super.onDetach()
         mListener = null
+        presenter?.detach()
+        presenter = null
     }
 
     override fun setPresenter(presenter: PublicRepositoriesContract.Presenter) {
@@ -64,7 +67,6 @@ class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.Vi
     }
 
     override fun getPublicRepositoriesOk(publicRepositoryList: List<PublicRepository>) {
-        Log.d(TAG, publicRepositoryList.toString())
     }
 
     override fun getPublicRepositoriesKO() {

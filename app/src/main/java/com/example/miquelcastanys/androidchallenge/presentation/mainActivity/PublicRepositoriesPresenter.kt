@@ -13,6 +13,7 @@ class PublicRepositoriesPresenter : PublicRepositoriesContract.Presenter {
     var view: WeakReference<PublicRepositoriesContract.View>? = null
     var repository: AndroidChallengeSourceImpl? = null
     override fun start() {
+        getPublicRepositories()
     }
 
     override fun attach(context: Context, view: PublicRepositoriesContract.View, repository: AndroidChallengeSourceImpl) {
