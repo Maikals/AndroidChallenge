@@ -3,12 +3,15 @@ package com.example.miquelcastanys.androidchallenge.presentation.mainActivity
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.example.miquelcastanys.androidchallenge.R
 import com.example.miquelcastanys.androidchallenge.presentation.interfaces.ActivityFragmentCommunicationInterface
+import com.example.miquelcastanys.androidchallenge.presentation.model.PublicRepository
 import kotlinx.android.synthetic.main.fragment_public_repositories_list.*
 
 /**
@@ -17,11 +20,13 @@ import kotlinx.android.synthetic.main.fragment_public_repositories_list.*
  * [ActivityFragmentCommunicationInterface] interface
  * to handle interaction events.
  */
-class PublicRepositoriesListFragment : Fragment() {
+class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.View {
 
     private var mListener: ActivityFragmentCommunicationInterface? = null
+    private lateinit var presenter: PublicRepositoriesContract.Presenter
 
     companion object {
+        val TAG = "PublicReposListFragment"
         fun newInstance() : PublicRepositoriesListFragment = PublicRepositoriesListFragment()
     }
 
@@ -33,6 +38,11 @@ class PublicRepositoriesListFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setRecyclerView()
+    }
+
+    private fun setRecyclerView() {
+        publicRepositoriesRV.layoutManager = LinearLayoutManager(context)
     }
 
     override fun onAttach(context: Context?) {
@@ -47,5 +57,16 @@ class PublicRepositoriesListFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         mListener = null
+    }
+
+    override fun setPresenter(presenter: PublicRepositoriesContract.Presenter) {
+        this.presenter = presenter
+    }
+
+    override fun getPublicRepositoriesOk(publicRepositoryList: List<PublicRepository>) {
+        Log.d(TAG, publicRepositoryList.toString())
+    }
+
+    override fun getPublicRepositoriesKO() {
     }
 }
