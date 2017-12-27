@@ -3,9 +3,10 @@ package com.example.miquelcastanys.androidchallenge.presentation.mainActivity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.example.miquelcastanys.androidchallenge.R
+import com.example.miquelcastanys.androidchallenge.presentation.interfaces.ActivityFragmentCommunicationInterface
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ActivityFragmentCommunicationInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
