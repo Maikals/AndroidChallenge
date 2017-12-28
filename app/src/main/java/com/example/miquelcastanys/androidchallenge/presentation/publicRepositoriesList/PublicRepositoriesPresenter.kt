@@ -29,7 +29,8 @@ class PublicRepositoriesPresenter : PublicRepositoriesContract.Presenter {
     override fun start() {
         if (view?.get() is PublicRepositoriesContract.View
                 && (publicRepositoryList == null || publicRepositoryList!!.isEmpty())) view?.get()!!.showProgressView()
-        publicRepositoryList = ArrayList()
+        if (publicRepositoryList == null) publicRepositoryList = ArrayList()
+        else publicRepositoryList?.clear()
         currentPage = 0
         isLastPage = false
         getPublicRepositories()
