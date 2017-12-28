@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import com.example.miquelcastanys.androidchallenge.R
 import com.example.miquelcastanys.androidchallenge.presentation.base.BaseDialog
 
 
@@ -28,11 +29,11 @@ class UrlDialog : BaseDialog() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val position = arguments.getInt(POSITION)
         return AlertDialog.Builder(activity)
-                .setTitle("Select where to go")
-                .setPositiveButton("Repository", { _, _ ->
+                .setTitle(getString(R.string.url_dialog_title))
+                .setPositiveButton(getString(R.string.repository_button), { _, _ ->
                     targetFragment.onActivityResult(targetRequestCode, RESULT_REPOSITORY, createIntent(position))
                 })
-                .setNegativeButton("Owner", { _, _ ->
+                .setNegativeButton(getString(R.string.owner_button), { _, _ ->
                     targetFragment.onActivityResult(targetRequestCode, RESULT_OWNER, createIntent(position))
                 })
                 .setNeutralButton(android.R.string.cancel, { _, _ ->
