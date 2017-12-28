@@ -2,7 +2,6 @@ package com.example.miquelcastanys.androidchallenge.presentation.mainActivity
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import com.example.miquelcastanys.androidchallenge.R
 import com.example.miquelcastanys.androidchallenge.domain.data.source.AndroidChallengeSourceImpl
 import com.example.miquelcastanys.androidchallenge.presentation.base.BaseActivity
@@ -34,7 +33,7 @@ class MainActivity : BaseActivity(), ActivityFragmentCommunicationInterface {
     }
 
     private fun setFragment() =
-        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, currentFragment, currentTag).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, currentFragment, currentTag).commit()
 
     override fun onSaveInstanceState(outState: Bundle?) {
         supportFragmentManager.putFragment(outState, currentTag, currentFragment)
