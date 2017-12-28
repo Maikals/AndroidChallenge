@@ -9,5 +9,5 @@ interface AndroidChallengeSource {
         fun onGetError(errorCode: Int?)
     }
 
-    fun getPublicRepositories(user: String, page: Int, pageSize: Int, callback: GetPublicRepositoriesCallback)
+    fun getPublicRepositories(user: String, page: Int, pageSize: Int, token: String, callback: GetPublicRepositoriesCallback)
 }

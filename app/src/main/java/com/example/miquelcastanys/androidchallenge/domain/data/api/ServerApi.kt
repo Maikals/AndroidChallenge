@@ -9,5 +9,8 @@ import retrofit2.http.Query
 
 interface ServerApi {
     @GET("/users/{user}/repos")
-    fun getPublicRepos(@Path("user") user: String, @Query("page") page: Int? = null, @Query("per_page") pageSize: Int? = null) : Call<List<PublicRepositoriesResponse>>
+    fun getPublicRepos(@Path("user") user: String,
+                       @Query("page") page: Int? = null,
+                       @Query("per_page") pageSize: Int? = null,
+                       @Query("access_token") token: String?): Call<List<PublicRepositoriesResponse>>
 }
