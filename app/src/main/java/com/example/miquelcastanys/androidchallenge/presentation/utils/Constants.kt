@@ -5,4 +5,5 @@ object Constants {
     val FOOTER_TYPE = 1
     val PAGE_SIZE: Int = 10
     val USER: String = "xing"
+    val SPLASH_TIME: Long = 2
 }
