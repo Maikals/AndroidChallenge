@@ -8,8 +8,8 @@ import com.example.miquelcastanys.androidchallenge.presentation.UseCase
 
 
 class PublicRepositoriesUseCase (val repository: AndroidChallengeSourceImpl) {
-    fun getAsync(user: String, page: Int, pageSize: Int, listener: UseCase<List<PublicRepositoriesResponse>>) {
-        repository.getPublicRepositories(user, page, pageSize, object : AndroidChallengeSource.GetPublicRepositoriesCallback{
+    fun getAsync(user: String, page: Int, pageSize: Int, token: String, listener: UseCase<List<PublicRepositoriesResponse>>) {
+        repository.getPublicRepositories(user, page, pageSize, token, object : AndroidChallengeSource.GetPublicRepositoriesCallback{
             override fun onGetPublicRepositoriesResponse(publicRepositoriesResponse: List<PublicRepositoriesResponse>) {
                 listener.onSuccess(publicRepositoriesResponse)
             }

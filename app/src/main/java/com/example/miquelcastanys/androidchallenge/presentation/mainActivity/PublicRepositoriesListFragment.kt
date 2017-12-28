@@ -30,7 +30,7 @@ class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.Vi
     private var visibleItemCount = 0
     private var totalItemCount = 0
     private var pastVisiblesItems = 0
-    private var position = 0
+    private var loading: Boolean = false
 
     companion object {
         val TAG = "PublicReposListFragment"
@@ -58,14 +58,16 @@ class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.Vi
                     visibleItemCount = linearLayoutManager.childCount
                     totalItemCount = linearLayoutManager.itemCount
                     pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition()
-                    if (!presenter?.isLastPage()!!) {
+                    if (!presenter?.isLastPage()!! && !loading) {
                         if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
-                            position = presenter?.getRepositoriesList()?.size!! - 5
+                            loading = true
                             presenter?.getPublicRepositories()
                         }
-                    } else {
-//                        removeFooter()
                     }
+                } else if (linearLayoutManager.findLastVisibleItemPosition() == publicRepositoriesRV.adapter.itemCount - 1
+                        && !presenter?.isLastPage()!!) {
+                    presenter?.getPublicRepositories()
+                    loading = true
                 }
             }
         })
@@ -102,14 +104,18 @@ class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.Vi
 
     override fun getPublicRepositoriesOk(publicRepositoryList: List<PublicRepository>) {
         Log.d(TAG, "getPublicRepositoriesOk")
-        publicRepositoriesRV.adapter = PublicRepositoriesListAdapter(publicRepositoryList)
+        if (publicRepositoriesRV.adapter != null) publicRepositoriesRV.adapter.notifyDataSetChanged()
+        else publicRepositoriesRV.adapter = PublicRepositoriesListAdapter(publicRepositoryList)
         publicRepositoriesSwipeRefreshLayout.visibility = View.VISIBLE
         publicRepositoriesSwipeRefreshLayout.isRefreshing = false
         emptyViewSwipeRefreshLayout.isRefreshing = false
+        loading = false
+
     }
 
     override fun getPublicRepositoriesKO() {
         Log.d(TAG, "getPublicRepositoriesKO")
+        loading = false
     }
 
     override fun showProgressView() {

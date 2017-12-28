@@ -2,6 +2,7 @@ package com.example.miquelcastanys.androidchallenge.presentation.mainActivity
 
 import android.content.Context
 import android.util.Log
+import com.example.miquelcastanys.androidchallenge.R
 import com.example.miquelcastanys.androidchallenge.domain.data.source.AndroidChallengeSourceImpl
 import com.example.miquelcastanys.androidchallenge.domain.model.PublicRepositoriesResponse
 import com.example.miquelcastanys.androidchallenge.presentation.UseCase
@@ -46,9 +47,9 @@ class PublicRepositoriesPresenter : PublicRepositoriesContract.Presenter {
     }
 
     override fun getPublicRepositories() {
-        currentPage += 1
         repository.let {
-            PublicRepositoriesUseCase(repository!!).getAsync("xing", currentPage, 10, object : UseCase<List<PublicRepositoriesResponse>> {
+            val token = (context?.get() as Context).getString(R.string.token) //change for your own token
+            PublicRepositoriesUseCase(repository!!).getAsync("xing", ++currentPage, Constants.PAGE_SIZE, token, object : UseCase<List<PublicRepositoriesResponse>> {
                 override fun onSuccess(item: List<PublicRepositoriesResponse>) {
                     Log.d(TAG, "currentPage = " + currentPage)
                     if (item.isEmpty()) isLastPage = true

@@ -10,8 +10,8 @@ import retrofit2.Response
 
 class AndroidChallengeSourceImpl : AndroidChallengeSource {
     val repository = AndroidChallengeService.getService()
-    override fun getPublicRepositories(user: String, page: Int, pageSize: Int, callback: AndroidChallengeSource.GetPublicRepositoriesCallback) {
-        val publicRepos = repository.getPublicRepos(user, page, pageSize)
+    override fun getPublicRepositories(user: String, page: Int, pageSize: Int, token: String,  callback: AndroidChallengeSource.GetPublicRepositoriesCallback) {
+        val publicRepos = repository.getPublicRepos(user, page, pageSize, token)
         publicRepos.enqueue(object : Callback<List<PublicRepositoriesResponse>>{
 
             override fun onResponse(call: Call<List<PublicRepositoriesResponse>>?, response: Response<List<PublicRepositoriesResponse>>?) {
