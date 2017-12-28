@@ -22,6 +22,7 @@ class MainActivity : BaseActivity(), ActivityFragmentCommunicationInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
         setToolbar()
         if (savedInstanceState == null || !savedInstanceState.containsKey(currentTag)) {
             createFragment()
@@ -51,7 +52,6 @@ class MainActivity : BaseActivity(), ActivityFragmentCommunicationInterface {
     }
 
     private fun setToolbar() {
-        setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(true)
     }
