@@ -15,5 +15,5 @@ object PublicRepositoriesResponseMapper {
     }
 
     private fun turnIntoPublicRepository(it: PublicRepositoriesResponse): PublicRepository =
-            PublicRepository(it.name, it.description, it.owner?.login, it.isFork, it.owner?.html_url, it.html_url)
+            PublicRepository(it.name, it.description, it.owner?.login, it.fork, it.owner?.html_url, it.html_url)
 }

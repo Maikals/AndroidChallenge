@@ -10,7 +10,7 @@ data class PublicRepositoriesResponse(val id: Int = 0,
                                       val isPrivateX: Boolean = false,
                                       val html_url: String? = null,
                                       val description: String? = null,
-                                      val isFork: Boolean = false,
+                                      val fork: Boolean = false,
                                       val url: String? = null,
                                       val forks_url: String? = null,
                                       val keys_url: String? = null,
@@ -158,7 +158,7 @@ data class PublicRepositoriesResponse(val id: Int = 0,
         writeInt((if (isPrivateX) 1 else 0))
         writeString(html_url)
         writeString(description)
-        writeInt((if (isFork) 1 else 0))
+        writeInt((if (fork) 1 else 0))
         writeString(url)
         writeString(forks_url)
         writeString(keys_url)
