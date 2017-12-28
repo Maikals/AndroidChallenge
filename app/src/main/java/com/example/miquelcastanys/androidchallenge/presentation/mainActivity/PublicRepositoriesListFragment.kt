@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.miquelcastanys.androidchallenge.R
+import com.example.miquelcastanys.androidchallenge.presentation.control.adapter.PublicRepositoriesListAdapter
 import com.example.miquelcastanys.androidchallenge.presentation.interfaces.ActivityFragmentCommunicationInterface
 import com.example.miquelcastanys.androidchallenge.presentation.model.PublicRepository
 import kotlinx.android.synthetic.main.fragment_public_repositories_list.*
@@ -67,8 +68,11 @@ class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.Vi
     }
 
     override fun getPublicRepositoriesOk(publicRepositoryList: List<PublicRepository>) {
+        Log.d(TAG, "getPublicRepositoriesOk")
+        publicRepositoriesRV.adapter = PublicRepositoriesListAdapter(publicRepositoryList)
     }
 
     override fun getPublicRepositoriesKO() {
+        Log.d(TAG, "getPublicRepositoriesKO")
     }
 }
