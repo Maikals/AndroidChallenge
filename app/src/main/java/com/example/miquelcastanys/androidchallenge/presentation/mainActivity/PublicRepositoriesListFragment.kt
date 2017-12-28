@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,11 @@ class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.Vi
 
     private var mListener: ActivityFragmentCommunicationInterface? = null
     private var presenter: PublicRepositoriesContract.Presenter? = null
+    private val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    private var visibleItemCount = 0
+    private var totalItemCount = 0
+    private var pastVisiblesItems = 0
+    private var position = 0
 
     companion object {
         val TAG = "PublicReposListFragment"
@@ -41,16 +47,37 @@ class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.Vi
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
         presenter?.start()
+        scrollRecyclerViewControl()
         setRefreshView()
     }
 
+    private fun scrollRecyclerViewControl() {
+        publicRepositoriesRV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                if (dy > 0) {
+                    visibleItemCount = linearLayoutManager.childCount
+                    totalItemCount = linearLayoutManager.itemCount
+                    pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition()
+                    if (!presenter?.isLastPage()!!) {
+                        if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
+                            position = presenter?.getRepositoriesList()?.size!! - 5
+                            presenter?.getPublicRepositories()
+                        }
+                    } else {
+//                        removeFooter()
+                    }
+                }
+            }
+        })
+    }
+
     private fun setRefreshView() {
-        emptyViewSwipeRefreshLayout.setOnRefreshListener { presenter?.getPublicRepositories() }
-        publicRepositoriesSwipeRefreshLayout.setOnRefreshListener { presenter?.getPublicRepositories() }
+        emptyViewSwipeRefreshLayout.setOnRefreshListener { presenter?.start() }
+        publicRepositoriesSwipeRefreshLayout.setOnRefreshListener { presenter?.start() }
     }
 
     private fun setRecyclerView() {
-        publicRepositoriesRV.layoutManager = LinearLayoutManager(context)
+        publicRepositoriesRV.layoutManager = linearLayoutManager
     }
 
     override fun onAttach(context: Context?) {

@@ -17,5 +17,7 @@ interface PublicRepositoriesContract {
 
     interface Presenter: BasePresenter<Context, View> {
         fun getPublicRepositories()
+        fun isLastPage(): Boolean?
+        fun getRepositoriesList(): List<PublicRepository>?
     }
 }

@@ -2,14 +2,16 @@ package com.example.miquelcastanys.androidchallenge.presentation.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.example.miquelcastanys.androidchallenge.presentation.utils.Constants
 
 
-data class PublicRepository(val name: String? = null, val description: String? = null, val login: String? = null, val forkFlag: Boolean? = null) : Parcelable {
+data class PublicRepository(val name: String? = null, val description: String? = null, val login: String? = null, val forkFlag: Boolean? = null, val type: Int = Constants.PUBLIC_REPOSITORY_TYPE) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
             source.readString(),
             source.readString(),
-            source.readValue(Boolean::class.java.classLoader) as Boolean?
+            source.readValue(Boolean::class.java.classLoader) as Boolean?,
+            source.readInt()
     )
 
     override fun describeContents() = 0
@@ -19,6 +21,7 @@ data class PublicRepository(val name: String? = null, val description: String? =
         writeString(description)
         writeString(login)
         writeValue(forkFlag)
+        writeInt(type)
     }
 
     companion object {

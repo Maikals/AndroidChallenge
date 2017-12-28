@@ -1,19 +1,35 @@
 package com.example.miquelcastanys.androidchallenge.presentation.mainActivity
 
 import android.content.Context
+import android.util.Log
 import com.example.miquelcastanys.androidchallenge.domain.data.source.AndroidChallengeSourceImpl
 import com.example.miquelcastanys.androidchallenge.domain.model.PublicRepositoriesResponse
 import com.example.miquelcastanys.androidchallenge.presentation.UseCase
+import com.example.miquelcastanys.androidchallenge.presentation.model.PublicRepository
 import com.example.miquelcastanys.androidchallenge.presentation.model.mappers.PublicRepositoriesResponseMapper
+import com.example.miquelcastanys.androidchallenge.presentation.utils.Constants
 import java.lang.ref.WeakReference
 
 
 class PublicRepositoriesPresenter : PublicRepositoriesContract.Presenter {
+
     var context: WeakReference<Context>? = null
     var view: WeakReference<PublicRepositoriesContract.View>? = null
-    var repository: AndroidChallengeSourceImpl? = null
+    private var repository: AndroidChallengeSourceImpl? = null
+    private var publicRepositoryList: ArrayList<PublicRepository>? = null
+    private var isLastPage = false
+    private var currentPage = 0
+
+    companion object {
+        private val TAG: String = "RepositoriesPresenter"
+    }
+
     override fun start() {
-        if(view?.get() is PublicRepositoriesContract.View) view?.get()!!.showProgressView()
+        if (view?.get() is PublicRepositoriesContract.View
+                && (publicRepositoryList == null || publicRepositoryList!!.isEmpty())) view?.get()!!.showProgressView()
+        publicRepositoryList = ArrayList()
+        currentPage = 0
+        isLastPage = false
         getPublicRepositories()
     }
 
@@ -30,17 +46,49 @@ class PublicRepositoriesPresenter : PublicRepositoriesContract.Presenter {
     }
 
     override fun getPublicRepositories() {
-        repository.let{PublicRepositoriesUseCase(repository!!).getAsync("xing", 1, 10, object : UseCase<List<PublicRepositoriesResponse>> {
-            override fun onSuccess(item: List<PublicRepositoriesResponse>) {
+        currentPage += 1
+        repository.let {
+            PublicRepositoriesUseCase(repository!!).getAsync("xing", currentPage, 10, object : UseCase<List<PublicRepositoriesResponse>> {
+                override fun onSuccess(item: List<PublicRepositoriesResponse>) {
+                    Log.d(TAG, "currentPage = " + currentPage)
+                    if (item.isEmpty()) isLastPage = true
+                    if (view?.get() is PublicRepositoriesContract.View && view?.get() != null) {
+                        addToCurrentList(PublicRepositoriesResponseMapper.turnIntoPublicRepositoryList(item))
+                        view?.get()!!.getPublicRepositoriesOk(publicRepositoryList!!)
+                        view?.get()!!.hideProgressView()
+                    }
+                }
 
-                (view?.get() as PublicRepositoriesContract.View).getPublicRepositoriesOk(PublicRepositoriesResponseMapper.turnIntoPublicRepositoryList(item))
-                if(view?.get() is PublicRepositoriesContract.View) view?.get()!!.hideProgressView()
-            }
+                override fun onError(code: Int) {
+                    if (view?.get() is PublicRepositoriesContract.View && view?.get() != null) {
+                        view?.get()!!.getPublicRepositoriesKO()
+                        view?.get()!!.hideProgressView()
+                    }
+                }
 
-            override fun onError(code: Int) {
-
-            }
-
-        })}
+            })
+        }
     }
+
+    private fun addToCurrentList(turnIntoPublicRepositoryList: List<PublicRepository>) {
+        if (!publicRepositoryList?.isEmpty()!!) removeFooter()
+        publicRepositoryList?.addAll(turnIntoPublicRepositoryList)
+        addFooter()
+    }
+
+
+    private fun removeFooter() {
+        if (publicRepositoryList != null)
+            publicRepositoryList!!.removeAll { it.type == Constants.FOOTER_TYPE }
+    }
+
+    private fun addFooter() {
+        if (!isLastPage)
+            publicRepositoryList?.add(PublicRepository(null, null, null, null, Constants.FOOTER_TYPE))
+    }
+
+    override fun isLastPage(): Boolean? = isLastPage
+
+    override fun getRepositoriesList(): List<PublicRepository>? = publicRepositoryList
+
 }
