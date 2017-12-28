@@ -116,24 +116,37 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
 
     override fun getPublicRepositoriesOk(publicRepositoryList: List<PublicRepository>) {
         Log.d(TAG, "getPublicRepositoriesOk")
+        if (publicRepositoryList.isEmpty()) {
+            emptyViewComponent.fillViews(EmptyViewModel.EMPTY)
+            showEmptyView()
+        } else {
+            setAdapter(publicRepositoryList)
+        }
+        loading = false
+
+    }
+
+    private fun setAdapter(publicRepositoryList: List<PublicRepository>) {
         if (publicRepositoriesRV.adapter != null) publicRepositoriesRV.adapter.notifyDataSetChanged()
         else publicRepositoriesRV.adapter = PublicRepositoriesListAdapter(publicRepositoryList, this)
         publicRepositoriesSwipeRefreshLayout.visibility = View.VISIBLE
         emptyViewSwipeRefreshLayout.visibility = View.GONE
         publicRepositoriesSwipeRefreshLayout.isRefreshing = false
         emptyViewSwipeRefreshLayout.isRefreshing = false
-        loading = false
-
     }
 
     override fun getPublicRepositoriesKO() {
         Log.d(TAG, "getPublicRepositoriesKO")
         emptyViewComponent.fillViews(EmptyViewModel.ERROR)
+        showEmptyView()
+        loading = false
+    }
+
+    private fun showEmptyView() {
         emptyViewSwipeRefreshLayout.isRefreshing = false
         publicRepositoriesSwipeRefreshLayout.isRefreshing = false
         emptyViewSwipeRefreshLayout.visibility = View.VISIBLE
         publicRepositoriesSwipeRefreshLayout.visibility = View.GONE
-        loading = false
     }
 
     override fun showProgressView() {

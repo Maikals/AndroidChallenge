@@ -6,4 +6,6 @@
     <string name="url_dialog_title">Select where to go</string>
     <string name="error_empty_view_title">Something went wrong</string>
     <string name="error_empty_view_description">Oh no! The public repositories cannot be fetch!</string>
+    <string name="no_elements_emtpy_view_title">Public repositories list</string>
+    <string name="no_elements_emtpy_view_description">Here will appear your public repositories</string>
 </resources>
