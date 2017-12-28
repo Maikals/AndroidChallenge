@@ -5,9 +5,10 @@ import android.util.Log
 import com.example.miquelcastanys.androidchallenge.R
 import com.example.miquelcastanys.androidchallenge.domain.data.source.AndroidChallengeSourceImpl
 import com.example.miquelcastanys.androidchallenge.domain.model.PublicRepositoriesResponse
-import com.example.miquelcastanys.androidchallenge.presentation.UseCase
+import com.example.miquelcastanys.androidchallenge.presentation.base.UseCase
 import com.example.miquelcastanys.androidchallenge.presentation.model.PublicRepository
 import com.example.miquelcastanys.androidchallenge.presentation.model.mappers.PublicRepositoriesResponseMapper
+import com.example.miquelcastanys.androidchallenge.presentation.useCases.PublicRepositoriesUseCase
 import com.example.miquelcastanys.androidchallenge.presentation.utils.Constants
 import java.lang.ref.WeakReference
 
