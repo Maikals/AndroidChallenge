@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.miquelcastanys.androidchallenge.R
 import com.example.miquelcastanys.androidchallenge.presentation.interfaces.OnListItemLongClicked
-import com.example.miquelcastanys.androidchallenge.presentation.mainActivity.FooterViewHolder
-import com.example.miquelcastanys.androidchallenge.presentation.mainActivity.RepositoryViewHolder
 import com.example.miquelcastanys.androidchallenge.presentation.model.PublicRepository
+import com.example.miquelcastanys.androidchallenge.presentation.publicRepositoriesList.FooterViewHolder
+import com.example.miquelcastanys.androidchallenge.presentation.publicRepositoriesList.RepositoryViewHolder
 import com.example.miquelcastanys.androidchallenge.presentation.utils.Constants
 
 
-class PublicRepositoriesListAdapter(val repositoriesList: List<PublicRepository>, val listener: OnListItemLongClicked.View) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), OnListItemLongClicked.Adapter {
+class PublicRepositoriesListAdapter(private val repositoriesList: List<PublicRepository>, private val listener: OnListItemLongClicked.View) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), OnListItemLongClicked.Adapter {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -34,7 +34,7 @@ class PublicRepositoriesListAdapter(val repositoriesList: List<PublicRepository>
         }
     }
 
-    fun getItem(position: Int?) : PublicRepository? =
-        if (position in 0 until repositoriesList.size) repositoriesList[position!!]
-        else null
+    fun getItem(position: Int?): PublicRepository? =
+            if (position in 0 until repositoriesList.size) repositoriesList[position!!]
+            else null
 }

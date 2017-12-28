@@ -1,10 +1,10 @@
-package com.example.miquelcastanys.androidchallenge.presentation.mainActivity
+package com.example.miquelcastanys.androidchallenge.presentation.useCases
 
 import com.example.miquelcastanys.androidchallenge.domain.DomainConstants
 import com.example.miquelcastanys.androidchallenge.domain.data.source.AndroidChallengeSource
 import com.example.miquelcastanys.androidchallenge.domain.data.source.AndroidChallengeSourceImpl
 import com.example.miquelcastanys.androidchallenge.domain.model.PublicRepositoriesResponse
-import com.example.miquelcastanys.androidchallenge.presentation.UseCase
+import com.example.miquelcastanys.androidchallenge.presentation.base.UseCase
 
 
 class PublicRepositoriesUseCase (val repository: AndroidChallengeSourceImpl) {

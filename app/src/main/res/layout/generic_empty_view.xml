@@ -7,14 +7,14 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/generic_empty_view_iv"
+        android:id="@+id/genericEmptyViewIv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         tools:src="@drawable/github"/>
 
     <TextView
-        android:id="@+id/generic_empty_view_title_tv"
+        android:id="@+id/genericEmptyViewTitleTv"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -22,7 +22,7 @@
         tools:text="Repositories" />
 
     <TextView
-        android:id="@+id/generic_empty_view_text_tv"
+        android:id="@+id/genericEmptyViewTextTv"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

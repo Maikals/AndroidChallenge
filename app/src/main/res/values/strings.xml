@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Android Challenge</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="repository_button">Repository</string>
+    <string name="owner_button">Owner</string>
+    <string name="url_dialog_title">Select where to go</string>
 </resources>

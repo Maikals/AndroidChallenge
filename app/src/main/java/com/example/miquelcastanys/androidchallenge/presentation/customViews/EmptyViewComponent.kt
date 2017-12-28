@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.miquelcastanys.androidchallenge.R
 import com.example.miquelcastanys.androidchallenge.presentation.enumerations.EmptyViewModel
+import kotlinx.android.synthetic.main.generic_empty_view.view.*
 
 
 class EmptyViewComponent : FrameLayout {
@@ -23,13 +24,14 @@ class EmptyViewComponent : FrameLayout {
     }
     private fun init() {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        inflater.inflate(R.layout.generic_empty_view, this, true)
-        imageView = findViewById(R.id.generic_empty_view_iv)
-        titleTv = findViewById(R.id.generic_empty_view_title_tv)
-        textTv = findViewById(R.id.generic_empty_view_text_tv)
+        val view = inflater.inflate(R.layout.generic_empty_view, this, true)
+        imageView = view.genericEmptyViewIv
+        titleTv = view.genericEmptyViewTitleTv
+        textTv = view.genericEmptyViewTextTv
     }
     fun fillViews(emptyViewModel: EmptyViewModel) {
         imageView!!.setImageDrawable(ContextCompat.getDrawable(context, emptyViewModel.imageId))
         titleTv!!.text = context.getString(emptyViewModel.title)
+        textTv!!.text = context.getString(emptyViewModel.subtitle)
     }
 }

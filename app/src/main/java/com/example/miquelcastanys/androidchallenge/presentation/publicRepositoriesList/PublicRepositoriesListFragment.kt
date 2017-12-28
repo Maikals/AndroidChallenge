@@ -1,4 +1,4 @@
-package com.example.miquelcastanys.androidchallenge.presentation.mainActivity
+package com.example.miquelcastanys.androidchallenge.presentation.publicRepositoriesList
 
 import android.content.Context
 import android.content.Intent
@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.miquelcastanys.androidchallenge.R
+import com.example.miquelcastanys.androidchallenge.presentation.base.BaseFragment
 import com.example.miquelcastanys.androidchallenge.presentation.control.adapter.PublicRepositoriesListAdapter
 import com.example.miquelcastanys.androidchallenge.presentation.dialogs.UrlDialog
 import com.example.miquelcastanys.androidchallenge.presentation.interfaces.ActivityFragmentCommunicationInterface
@@ -26,7 +27,7 @@ import kotlinx.android.synthetic.main.fragment_public_repositories_list.*
  * [ActivityFragmentCommunicationInterface] interface
  * to handle interaction events.
  */
-class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.View, OnListItemLongClicked.View {
+class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContract.View, OnListItemLongClicked.View {
 
     private var mListener: ActivityFragmentCommunicationInterface? = null
     private var presenter: PublicRepositoriesContract.Presenter? = null

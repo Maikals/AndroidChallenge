@@ -28,7 +28,7 @@
  *                                 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
 
-package com.example.miquelcastanys.androidchallenge.presentation
+package com.example.miquelcastanys.androidchallenge.presentation.base
 
 
 interface UseCase <in T>  {
