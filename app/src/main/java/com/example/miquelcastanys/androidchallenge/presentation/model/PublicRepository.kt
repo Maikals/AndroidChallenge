@@ -5,12 +5,20 @@ import android.os.Parcelable
 import com.example.miquelcastanys.androidchallenge.presentation.utils.Constants
 
 
-data class PublicRepository(val name: String? = null, val description: String? = null, val login: String? = null, val forkFlag: Boolean? = null, val type: Int = Constants.PUBLIC_REPOSITORY_TYPE) : Parcelable {
+data class PublicRepository(val name: String? = null,
+                            val description: String? = null,
+                            val login: String? = null,
+                            val forkFlag: Boolean? = null,
+                            val ownerUrl: String? = null,
+                            val repositoryUrl: String? = null,
+                            val type: Int = Constants.PUBLIC_REPOSITORY_TYPE) : Parcelable {
     constructor(source: Parcel) : this(
             source.readString(),
             source.readString(),
             source.readString(),
             source.readValue(Boolean::class.java.classLoader) as Boolean?,
+            source.readString(),
+            source.readString(),
             source.readInt()
     )
 
@@ -21,6 +29,8 @@ data class PublicRepository(val name: String? = null, val description: String? =
         writeString(description)
         writeString(login)
         writeValue(forkFlag)
+        writeString(ownerUrl)
+        writeString(repositoryUrl)
         writeInt(type)
     }
 

@@ -1,6 +1,8 @@
 package com.example.miquelcastanys.androidchallenge.presentation.mainActivity
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -12,7 +14,9 @@ import android.view.ViewGroup
 
 import com.example.miquelcastanys.androidchallenge.R
 import com.example.miquelcastanys.androidchallenge.presentation.control.adapter.PublicRepositoriesListAdapter
+import com.example.miquelcastanys.androidchallenge.presentation.dialogs.UrlDialog
 import com.example.miquelcastanys.androidchallenge.presentation.interfaces.ActivityFragmentCommunicationInterface
+import com.example.miquelcastanys.androidchallenge.presentation.interfaces.OnListItemLongClicked
 import com.example.miquelcastanys.androidchallenge.presentation.model.PublicRepository
 import kotlinx.android.synthetic.main.fragment_public_repositories_list.*
 
@@ -22,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_public_repositories_list.*
  * [ActivityFragmentCommunicationInterface] interface
  * to handle interaction events.
  */
-class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.View {
+class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.View, OnListItemLongClicked.View {
 
     private var mListener: ActivityFragmentCommunicationInterface? = null
     private var presenter: PublicRepositoriesContract.Presenter? = null
@@ -34,7 +38,9 @@ class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.Vi
 
     companion object {
         val TAG = "PublicReposListFragment"
-        fun newInstance() : PublicRepositoriesListFragment = PublicRepositoriesListFragment()
+        private val URL_DIALOG_REQUEST: Int = 99
+
+        fun newInstance(): PublicRepositoriesListFragment = PublicRepositoriesListFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -105,7 +111,7 @@ class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.Vi
     override fun getPublicRepositoriesOk(publicRepositoryList: List<PublicRepository>) {
         Log.d(TAG, "getPublicRepositoriesOk")
         if (publicRepositoriesRV.adapter != null) publicRepositoriesRV.adapter.notifyDataSetChanged()
-        else publicRepositoriesRV.adapter = PublicRepositoriesListAdapter(publicRepositoryList)
+        else publicRepositoriesRV.adapter = PublicRepositoriesListAdapter(publicRepositoryList, this)
         publicRepositoriesSwipeRefreshLayout.visibility = View.VISIBLE
         publicRepositoriesSwipeRefreshLayout.isRefreshing = false
         emptyViewSwipeRefreshLayout.isRefreshing = false
@@ -124,5 +130,37 @@ class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.Vi
 
     override fun hideProgressView() {
         progressBar.visibility = View.GONE
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == URL_DIALOG_REQUEST) {
+            when (resultCode) {
+                UrlDialog.RESULT_OWNER -> {
+                    val browserIntent = Intent(Intent.ACTION_VIEW,
+                            Uri.parse(getRepository(data?.getIntExtra(UrlDialog.POSITION, 0))?.ownerUrl))
+                    activity.startActivity(browserIntent)
+
+                }
+                UrlDialog.RESULT_REPOSITORY -> {
+                    val browserIntent = Intent(Intent.ACTION_VIEW,
+                            Uri.parse(getRepository(data?.getIntExtra(UrlDialog.POSITION, 0))?.repositoryUrl))
+                    activity.startActivity(browserIntent)
+                }
+
+            }
+        }
+    }
+
+    private fun getRepository(position: Int?): PublicRepository? =
+            if (publicRepositoriesRV.adapter is PublicRepositoriesListAdapter)
+                (publicRepositoriesRV.adapter as PublicRepositoriesListAdapter).getItem(position)
+            else null
+
+    override fun onItemLongClick(position: Int) {
+        Log.d(TAG, "List Item $position clicked")
+        val newInstance = UrlDialog.newInstance(position)
+        newInstance.setTargetFragment(this, URL_DIALOG_REQUEST)
+        newInstance.show(fragmentManager, UrlDialog.TAG)
     }
 }

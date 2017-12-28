@@ -85,7 +85,7 @@ class PublicRepositoriesPresenter : PublicRepositoriesContract.Presenter {
 
     private fun addFooter() {
         if (!isLastPage)
-            publicRepositoryList?.add(PublicRepository(null, null, null, null, Constants.FOOTER_TYPE))
+            publicRepositoryList?.add(PublicRepository(null, null, null, null, null, null, Constants.FOOTER_TYPE))
     }
 
     override fun isLastPage(): Boolean? = isLastPage
