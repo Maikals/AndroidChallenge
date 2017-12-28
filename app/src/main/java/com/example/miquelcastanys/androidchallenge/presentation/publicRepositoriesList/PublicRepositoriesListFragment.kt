@@ -16,6 +16,7 @@ import com.example.miquelcastanys.androidchallenge.R
 import com.example.miquelcastanys.androidchallenge.presentation.base.BaseFragment
 import com.example.miquelcastanys.androidchallenge.presentation.control.adapter.PublicRepositoriesListAdapter
 import com.example.miquelcastanys.androidchallenge.presentation.dialogs.UrlDialog
+import com.example.miquelcastanys.androidchallenge.presentation.enumerations.EmptyViewModel
 import com.example.miquelcastanys.androidchallenge.presentation.interfaces.ActivityFragmentCommunicationInterface
 import com.example.miquelcastanys.androidchallenge.presentation.interfaces.OnListItemLongClicked
 import com.example.miquelcastanys.androidchallenge.presentation.model.PublicRepository
@@ -81,8 +82,12 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
     }
 
     private fun setRefreshView() {
-        emptyViewSwipeRefreshLayout.setOnRefreshListener { presenter?.start() }
-        publicRepositoriesSwipeRefreshLayout.setOnRefreshListener { presenter?.start() }
+        emptyViewSwipeRefreshLayout.setOnRefreshListener { presenter?.start()
+            loading = true
+        }
+        publicRepositoriesSwipeRefreshLayout.setOnRefreshListener { presenter?.start()
+            loading = true
+        }
     }
 
     private fun setRecyclerView() {
@@ -111,18 +116,37 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
 
     override fun getPublicRepositoriesOk(publicRepositoryList: List<PublicRepository>) {
         Log.d(TAG, "getPublicRepositoriesOk")
-        if (publicRepositoriesRV.adapter != null) publicRepositoriesRV.adapter.notifyDataSetChanged()
-        else publicRepositoriesRV.adapter = PublicRepositoriesListAdapter(publicRepositoryList, this)
-        publicRepositoriesSwipeRefreshLayout.visibility = View.VISIBLE
-        publicRepositoriesSwipeRefreshLayout.isRefreshing = false
-        emptyViewSwipeRefreshLayout.isRefreshing = false
+        if (publicRepositoryList.isEmpty()) {
+            emptyViewComponent.fillViews(EmptyViewModel.EMPTY)
+            showEmptyView()
+        } else {
+            setAdapter(publicRepositoryList)
+        }
         loading = false
 
     }
 
+    private fun setAdapter(publicRepositoryList: List<PublicRepository>) {
+        if (publicRepositoriesRV.adapter != null) publicRepositoriesRV.adapter.notifyDataSetChanged()
+        else publicRepositoriesRV.adapter = PublicRepositoriesListAdapter(publicRepositoryList, this)
+        publicRepositoriesSwipeRefreshLayout.visibility = View.VISIBLE
+        emptyViewSwipeRefreshLayout.visibility = View.GONE
+        publicRepositoriesSwipeRefreshLayout.isRefreshing = false
+        emptyViewSwipeRefreshLayout.isRefreshing = false
+    }
+
     override fun getPublicRepositoriesKO() {
         Log.d(TAG, "getPublicRepositoriesKO")
+        emptyViewComponent.fillViews(EmptyViewModel.ERROR)
+        showEmptyView()
         loading = false
+    }
+
+    private fun showEmptyView() {
+        emptyViewSwipeRefreshLayout.isRefreshing = false
+        publicRepositoriesSwipeRefreshLayout.isRefreshing = false
+        emptyViewSwipeRefreshLayout.visibility = View.VISIBLE
+        publicRepositoriesSwipeRefreshLayout.visibility = View.GONE
     }
 
     override fun showProgressView() {
