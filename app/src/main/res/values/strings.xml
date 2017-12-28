@@ -4,4 +4,6 @@
     <string name="repository_button">Repository</string>
     <string name="owner_button">Owner</string>
     <string name="url_dialog_title">Select where to go</string>
+    <string name="error_empty_view_title">Something went wrong</string>
+    <string name="error_empty_view_description">Oh no! The public repositories cannot be fetch!</string>
 </resources>
