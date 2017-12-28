@@ -49,7 +49,7 @@ class PublicRepositoriesPresenter : PublicRepositoriesContract.Presenter {
     override fun getPublicRepositories() {
         repository.let {
             val token = (context?.get() as Context).getString(R.string.token) //change for your own token
-            PublicRepositoriesUseCase(repository!!).getAsync("xing", ++currentPage, Constants.PAGE_SIZE, token, object : UseCase<List<PublicRepositoriesResponse>> {
+            PublicRepositoriesUseCase(repository!!).getAsync(Constants.USER, ++currentPage, Constants.PAGE_SIZE, token, object : UseCase<List<PublicRepositoriesResponse>> {
                 override fun onSuccess(item: List<PublicRepositoriesResponse>) {
                     Log.d(TAG, "currentPage = " + currentPage)
                     if (item.isEmpty()) isLastPage = true
