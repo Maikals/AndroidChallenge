@@ -41,6 +41,12 @@ class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.Vi
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
         presenter?.start()
+        setRefreshView()
+    }
+
+    private fun setRefreshView() {
+        emptyViewSwipeRefreshLayout.setOnRefreshListener { presenter?.getPublicRepositories() }
+        publicRepositoriesSwipeRefreshLayout.setOnRefreshListener { presenter?.getPublicRepositories() }
     }
 
     private fun setRecyclerView() {
@@ -52,7 +58,7 @@ class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.Vi
         if (context is ActivityFragmentCommunicationInterface) {
             mListener = context
         } else {
-            throw RuntimeException(context!!.toString() + " must implement OnFragmentInteractionListener")
+            throw RuntimeException(context!!.toString() + " must implement ActivityFragmentCommunicationInterface")
         }
     }
 
@@ -70,9 +76,20 @@ class PublicRepositoriesListFragment : Fragment(), PublicRepositoriesContract.Vi
     override fun getPublicRepositoriesOk(publicRepositoryList: List<PublicRepository>) {
         Log.d(TAG, "getPublicRepositoriesOk")
         publicRepositoriesRV.adapter = PublicRepositoriesListAdapter(publicRepositoryList)
+        publicRepositoriesSwipeRefreshLayout.visibility = View.VISIBLE
+        publicRepositoriesSwipeRefreshLayout.isRefreshing = false
+        emptyViewSwipeRefreshLayout.isRefreshing = false
     }
 
     override fun getPublicRepositoriesKO() {
         Log.d(TAG, "getPublicRepositoriesKO")
+    }
+
+    override fun showProgressView() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    override fun hideProgressView() {
+        progressBar.visibility = View.GONE
     }
 }

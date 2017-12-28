@@ -13,6 +13,7 @@ class PublicRepositoriesPresenter : PublicRepositoriesContract.Presenter {
     var view: WeakReference<PublicRepositoriesContract.View>? = null
     var repository: AndroidChallengeSourceImpl? = null
     override fun start() {
+        if(view?.get() is PublicRepositoriesContract.View) view?.get()!!.showProgressView()
         getPublicRepositories()
     }
 
@@ -33,6 +34,7 @@ class PublicRepositoriesPresenter : PublicRepositoriesContract.Presenter {
             override fun onSuccess(item: List<PublicRepositoriesResponse>) {
 
                 (view?.get() as PublicRepositoriesContract.View).getPublicRepositoriesOk(PublicRepositoriesResponseMapper.turnIntoPublicRepositoryList(item))
+                if(view?.get() is PublicRepositoriesContract.View) view?.get()!!.hideProgressView()
             }
 
             override fun onError(code: Int) {

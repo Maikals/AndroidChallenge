@@ -10,6 +10,8 @@ interface PublicRepositoriesContract {
     interface View : BaseView<Presenter> {
         fun getPublicRepositoriesOk(publicRepositoryList: List<PublicRepository>)
         fun getPublicRepositoriesKO()
+        fun showProgressView()
+        fun hideProgressView()
 
     }
 
