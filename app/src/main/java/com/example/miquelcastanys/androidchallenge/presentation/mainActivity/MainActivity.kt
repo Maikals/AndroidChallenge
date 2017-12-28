@@ -2,11 +2,12 @@ package com.example.miquelcastanys.androidchallenge.presentation.mainActivity
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import com.example.miquelcastanys.androidchallenge.R
 import com.example.miquelcastanys.androidchallenge.domain.data.source.AndroidChallengeSourceImpl
 import com.example.miquelcastanys.androidchallenge.presentation.interfaces.ActivityFragmentCommunicationInterface
+import com.example.miquelcastanys.androidchallenge.presentation.publicRepositoriesList.PublicRepositoriesListFragment
+import com.example.miquelcastanys.androidchallenge.presentation.publicRepositoriesList.PublicRepositoriesPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), ActivityFragmentCommunicationInterface {

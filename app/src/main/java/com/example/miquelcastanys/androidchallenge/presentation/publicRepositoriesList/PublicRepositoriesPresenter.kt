@@ -1,4 +1,4 @@
-package com.example.miquelcastanys.androidchallenge.presentation.mainActivity
+package com.example.miquelcastanys.androidchallenge.presentation.publicRepositoriesList
 
 import android.content.Context
 import android.util.Log

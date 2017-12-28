@@ -1,4 +1,4 @@
-package com.example.miquelcastanys.androidchallenge.presentation.mainActivity
+package com.example.miquelcastanys.androidchallenge.presentation.publicRepositoriesList
 
 import com.example.miquelcastanys.androidchallenge.domain.DomainConstants
 import com.example.miquelcastanys.androidchallenge.domain.data.source.AndroidChallengeSource

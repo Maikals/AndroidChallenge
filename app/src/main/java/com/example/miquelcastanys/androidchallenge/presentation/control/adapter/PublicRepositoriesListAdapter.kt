@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.miquelcastanys.androidchallenge.R
 import com.example.miquelcastanys.androidchallenge.presentation.interfaces.OnListItemLongClicked
-import com.example.miquelcastanys.androidchallenge.presentation.mainActivity.FooterViewHolder
-import com.example.miquelcastanys.androidchallenge.presentation.mainActivity.RepositoryViewHolder
+import com.example.miquelcastanys.androidchallenge.presentation.publicRepositoriesList.FooterViewHolder
+import com.example.miquelcastanys.androidchallenge.presentation.publicRepositoriesList.RepositoryViewHolder
 import com.example.miquelcastanys.androidchallenge.presentation.model.PublicRepository
 import com.example.miquelcastanys.androidchallenge.presentation.utils.Constants
 
