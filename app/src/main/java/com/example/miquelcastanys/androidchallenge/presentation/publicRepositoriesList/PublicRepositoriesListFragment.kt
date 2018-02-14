@@ -82,9 +82,6 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
     }
 
     private fun setRefreshView() {
-        emptyViewSwipeRefreshLayout.setOnRefreshListener { presenter?.start()
-            loading = true
-        }
         publicRepositoriesSwipeRefreshLayout.setOnRefreshListener { presenter?.start()
             loading = true
         }
@@ -121,6 +118,7 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
             showEmptyView()
         } else {
             setAdapter(publicRepositoryList)
+            showRecyclerView()
         }
         loading = false
 
@@ -129,10 +127,13 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
     private fun setAdapter(publicRepositoryList: List<PublicRepository>) {
         if (publicRepositoriesRV.adapter != null) publicRepositoriesRV.adapter.notifyDataSetChanged()
         else publicRepositoriesRV.adapter = PublicRepositoriesListAdapter(publicRepositoryList, this)
-        publicRepositoriesSwipeRefreshLayout.visibility = View.VISIBLE
-        emptyViewSwipeRefreshLayout.visibility = View.GONE
+
+    }
+
+    private fun showRecyclerView() {
+        emptyViewComponent.visibility = View.GONE
         publicRepositoriesSwipeRefreshLayout.isRefreshing = false
-        emptyViewSwipeRefreshLayout.isRefreshing = false
+        publicRepositoriesRV.visibility = View.VISIBLE
     }
 
     override fun getPublicRepositoriesKO() {
@@ -143,10 +144,9 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
     }
 
     private fun showEmptyView() {
-        emptyViewSwipeRefreshLayout.isRefreshing = false
         publicRepositoriesSwipeRefreshLayout.isRefreshing = false
-        emptyViewSwipeRefreshLayout.visibility = View.VISIBLE
-        publicRepositoriesSwipeRefreshLayout.visibility = View.GONE
+        emptyViewComponent.visibility = View.VISIBLE
+        publicRepositoriesRV.visibility = View.GONE
     }
 
     override fun showProgressView() {

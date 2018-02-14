@@ -11,28 +11,23 @@
         android:layout_centerInParent="true" />
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/emptyViewSwipeRefreshLayout"
+        android:id="@+id/publicRepositoriesSwipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/publicRepositoriesRV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <com.example.miquelcastanys.androidchallenge.presentation.customViews.EmptyViewComponent
             android:id="@+id/emptyViewComponent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/publicRepositoriesSwipeRefreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/publicRepositoriesRV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>
