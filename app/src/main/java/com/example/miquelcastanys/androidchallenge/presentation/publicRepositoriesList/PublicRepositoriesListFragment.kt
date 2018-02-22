@@ -58,8 +58,8 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
     }
 
     companion object {
-        val TAG = "PublicReposListFragment"
-        private val URL_DIALOG_REQUEST: Int = 99
+        const val TAG = "PublicReposListFragment"
+        private const val URL_DIALOG_REQUEST: Int = 99
 
         fun newInstance(): PublicRepositoriesListFragment = PublicRepositoriesListFragment()
     }
