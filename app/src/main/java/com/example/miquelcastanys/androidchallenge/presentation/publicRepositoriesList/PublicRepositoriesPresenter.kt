@@ -23,7 +23,7 @@ class PublicRepositoriesPresenter : PublicRepositoriesContract.Presenter {
     private var currentPage = 0
 
     companion object {
-        private val TAG: String = "RepositoriesPresenter"
+        private const val TAG: String = "RepositoriesPresenter"
     }
 
     override fun start() {

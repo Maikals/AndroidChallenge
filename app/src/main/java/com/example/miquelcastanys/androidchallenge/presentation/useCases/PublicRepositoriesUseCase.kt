@@ -7,7 +7,7 @@ import com.example.miquelcastanys.androidchallenge.presentation.model.domain.Pub
 import com.example.miquelcastanys.androidchallenge.presentation.base.UseCase
 
 
-class PublicRepositoriesUseCase (val repository: AndroidChallengeSourceImpl) {
+class PublicRepositoriesUseCase (private val repository: AndroidChallengeSourceImpl) {
     fun getAsync(user: String, page: Int, pageSize: Int, token: String, listener: UseCase<List<PublicRepositoriesResponse>>) {
         repository.getPublicRepositories(user, page, pageSize, token, object : AndroidChallengeSource.GetPublicRepositoriesCallback{
             override fun onGetPublicRepositoriesResponse(publicRepositoriesResponse: List<PublicRepositoriesResponse>) {

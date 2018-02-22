@@ -7,9 +7,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object AndroidChallengeRestApiClient {
-    val TIMEOUT_CONNECTION_VALUE = 60L
-    val TIMEOUT_READ_VALUE = 60L
-    val TIMEOUT_WRITE_VALUE = 60L
+    private const val TIMEOUT_CONNECTION_VALUE = 60L
+    private const val TIMEOUT_READ_VALUE = 60L
+    private const val TIMEOUT_WRITE_VALUE = 60L
     fun <S> createService(serviceClass: Class<S>): S {
         val httpClient = OkHttpClient.Builder()
                 .connectTimeout(TIMEOUT_CONNECTION_VALUE, TimeUnit.SECONDS)

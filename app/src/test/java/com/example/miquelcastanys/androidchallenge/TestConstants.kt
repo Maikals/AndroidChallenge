@@ -1,7 +1,7 @@
 package com.example.miquelcastanys.androidchallenge
 
 object TestConstants {
-    val FIRST_PAGE = "[" +
+    const val FIRST_PAGE = "[" +
             "  {" +
             "    \"id\": 2399148," +
             "    \"name\": \"absurdity\"," +
@@ -191,5 +191,5 @@ object TestConstants {
             "  }" +
             "]"
 
-    val ERROR_MESSAGE = "Not Found"
+    const val ERROR_MESSAGE = "Not Found"
 }

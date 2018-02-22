@@ -8,7 +8,7 @@ import com.example.miquelcastanys.androidchallenge.presentation.model.presentati
 import kotlinx.android.synthetic.main.repository_view_holder.view.*
 
 
-class RepositoryViewHolder(val view: View, val listener: OnListItemLongClicked.Adapter) : RecyclerView.ViewHolder(view) {
+class RepositoryViewHolder(val view: View, private val listener: OnListItemLongClicked.Adapter) : RecyclerView.ViewHolder(view) {
 
     fun bindView(repository: PublicRepository) {
         view.name.text = repository.name
