@@ -19,5 +19,6 @@ interface PublicRepositoriesContract {
         fun getPublicRepositories()
         fun isLastPage(): Boolean?
         fun getRepositoriesList(): List<PublicRepository>?
+        fun openUrl(url: String)
     }
 }

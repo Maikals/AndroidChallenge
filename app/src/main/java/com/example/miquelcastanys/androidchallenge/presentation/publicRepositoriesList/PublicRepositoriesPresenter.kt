@@ -1,10 +1,14 @@
 package com.example.miquelcastanys.androidchallenge.presentation.publicRepositoriesList
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.example.miquelcastanys.androidchallenge.R
 import com.example.miquelcastanys.androidchallenge.domain.data.source.AndroidChallengeSourceImpl
 import com.example.miquelcastanys.androidchallenge.presentation.base.UseCase
+import com.example.miquelcastanys.androidchallenge.presentation.dialogs.UrlDialog
 import com.example.miquelcastanys.androidchallenge.presentation.model.domain.PublicRepositoriesResponse
 import com.example.miquelcastanys.androidchallenge.presentation.model.mappers.PublicRepositoriesResponseMapper
 import com.example.miquelcastanys.androidchallenge.presentation.model.presentation.PublicRepository
@@ -14,6 +18,11 @@ import java.lang.ref.WeakReference
 
 
 class PublicRepositoriesPresenter : PublicRepositoriesContract.Presenter {
+    override fun openUrl(url:String) {
+        val browserIntent = Intent(Intent.ACTION_VIEW,
+                Uri.parse(url))
+        context?.get()?.startActivity(browserIntent)
+    }
 
     var context: WeakReference<Context>? = null
     var view: WeakReference<PublicRepositoriesContract.View>? = null

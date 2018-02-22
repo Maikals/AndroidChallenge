@@ -2,7 +2,6 @@ package com.example.miquelcastanys.androidchallenge.presentation.publicRepositor
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -11,7 +10,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.example.miquelcastanys.androidchallenge.R
 import com.example.miquelcastanys.androidchallenge.presentation.base.BaseFragment
 import com.example.miquelcastanys.androidchallenge.presentation.control.adapter.PublicRepositoriesListAdapter
@@ -109,9 +107,9 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
         presenter = null
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         publicRepositoriesRV.removeOnScrollListener(onScrollListener)
-        super.onDestroy()
+        super.onDestroyView()
     }
 
     override fun setPresenter(presenter: PublicRepositoriesContract.Presenter) {
@@ -168,26 +166,16 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == URL_DIALOG_REQUEST) {
             when (resultCode) {
-                UrlDialog.RESULT_OWNER -> {
-                    val browserIntent = Intent(Intent.ACTION_VIEW,
-                            Uri.parse(getRepository(data?.getIntExtra(UrlDialog.POSITION, 0))?.ownerUrl))
-                    activity.startActivity(browserIntent)
-
-                }
-                UrlDialog.RESULT_REPOSITORY -> {
-                    val browserIntent = Intent(Intent.ACTION_VIEW,
-                            Uri.parse(getRepository(data?.getIntExtra(UrlDialog.POSITION, 0))?.repositoryUrl))
-                    activity.startActivity(browserIntent)
-                }
-
+                UrlDialog.RESULT_OWNER -> presenter
+                    ?.openUrl(getRepository(data?.getIntExtra(UrlDialog.POSITION, 0)!!)?.ownerUrl!!)
+                UrlDialog.RESULT_REPOSITORY -> presenter
+                    ?.openUrl(getRepository(data?.getIntExtra(UrlDialog.POSITION, 0)!!)?.repositoryUrl!!)
             }
         }
     }
 
-    private fun getRepository(position: Int?): PublicRepository? =
-            if (publicRepositoriesRV.adapter is PublicRepositoriesListAdapter)
-                (publicRepositoriesRV.adapter as PublicRepositoriesListAdapter).getItem(position)
-            else null
+    private fun getRepository(position: Int): PublicRepository? =
+            presenter?.getRepositoriesList()!![position]
 
     override fun onItemLongClick(position: Int) {
         Log.d(TAG, "List Item $position clicked")
