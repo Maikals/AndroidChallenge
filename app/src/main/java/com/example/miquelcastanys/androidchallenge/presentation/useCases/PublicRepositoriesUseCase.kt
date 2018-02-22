@@ -1,6 +1,6 @@
 package com.example.miquelcastanys.androidchallenge.presentation.useCases
 
-import com.example.miquelcastanys.androidchallenge.domain.DomainConstants
+import com.example.miquelcastanys.androidchallenge.domain.data.DataConstants
 import com.example.miquelcastanys.androidchallenge.domain.data.source.AndroidChallengeSource
 import com.example.miquelcastanys.androidchallenge.domain.data.source.AndroidChallengeSourceImpl
 import com.example.miquelcastanys.androidchallenge.presentation.model.domain.PublicRepositoriesResponse
@@ -15,7 +15,7 @@ class PublicRepositoriesUseCase (val repository: AndroidChallengeSourceImpl) {
             }
 
             override fun onGetError(errorCode: Int?) {
-                listener.onError(errorCode ?: DomainConstants.REQUEST_CODE_UNKNOWN_ERROR)
+                listener.onError(errorCode ?: DataConstants.REQUEST_CODE_UNKNOWN_ERROR)
             }
 
         })

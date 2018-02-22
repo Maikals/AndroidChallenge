@@ -1,4 +1,4 @@
-package com.example.miquelcastanys.androidchallenge.domain
+package com.example.miquelcastanys.androidchallenge.domain.data
 
 /*            _MMMMM`
  *     __MMMMMMMMM`       J        openTrends Solucions i Sistemes, S.L.
@@ -29,7 +29,7 @@ package com.example.miquelcastanys.androidchallenge.domain
  *                                 with this program; if not, write to the Free Software Foundation, Inc.,
  *                                 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. 
  */
-object DomainConstants {
+object DataConstants {
     val BASE_URL = "https://api.github.com/"
     val REQUEST_CODE_OK = 200
     val REQUEST_CODE_NOT_FOUND = 404

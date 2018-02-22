@@ -1,6 +1,6 @@
 package com.example.miquelcastanys.androidchallenge.domain.data.api
 
-import com.example.miquelcastanys.androidchallenge.domain.DomainConstants
+import com.example.miquelcastanys.androidchallenge.domain.data.DataConstants
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,7 +16,7 @@ object AndroidChallengeRestApiClient {
                 .readTimeout(TIMEOUT_READ_VALUE, TimeUnit.SECONDS)
                 .writeTimeout(TIMEOUT_WRITE_VALUE, TimeUnit.SECONDS)
         val builder = Retrofit.Builder()
-                .baseUrl(DomainConstants.BASE_URL)
+                .baseUrl(DataConstants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
         return builder.client(httpClient.build()).build().create(serviceClass)
     }
