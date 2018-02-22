@@ -37,6 +37,25 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
     private var totalItemCount = 0
     private var pastVisiblesItems = 0
     private var loading: Boolean = false
+    private val onScrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            if (dy > 0) {
+                visibleItemCount = linearLayoutManager.childCount
+                totalItemCount = linearLayoutManager.itemCount
+                pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition()
+                if (!presenter?.isLastPage()!! && !loading) {
+                    if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
+                        loading = true
+                        presenter?.getPublicRepositories()
+                    }
+                }
+            } else if (linearLayoutManager.findLastVisibleItemPosition() == publicRepositoriesRV.adapter.itemCount - 1
+                    && !presenter?.isLastPage()!!) {
+                presenter?.getPublicRepositories()
+                loading = true
+            }
+        }
+    }
 
     companion object {
         val TAG = "PublicReposListFragment"
@@ -60,29 +79,12 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
     }
 
     private fun scrollRecyclerViewControl() {
-        publicRepositoriesRV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                if (dy > 0) {
-                    visibleItemCount = linearLayoutManager.childCount
-                    totalItemCount = linearLayoutManager.itemCount
-                    pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition()
-                    if (!presenter?.isLastPage()!! && !loading) {
-                        if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
-                            loading = true
-                            presenter?.getPublicRepositories()
-                        }
-                    }
-                } else if (linearLayoutManager.findLastVisibleItemPosition() == publicRepositoriesRV.adapter.itemCount - 1
-                        && !presenter?.isLastPage()!!) {
-                    presenter?.getPublicRepositories()
-                    loading = true
-                }
-            }
-        })
+        publicRepositoriesRV.addOnScrollListener(onScrollListener)
     }
 
     private fun setRefreshView() {
-        publicRepositoriesSwipeRefreshLayout.setOnRefreshListener { presenter?.start()
+        publicRepositoriesSwipeRefreshLayout.setOnRefreshListener {
+            presenter?.start()
             loading = true
         }
     }
@@ -105,6 +107,11 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
         mListener = null
         presenter?.detach()
         presenter = null
+    }
+
+    override fun onDestroy() {
+        publicRepositoriesRV.removeOnScrollListener(onScrollListener)
+        super.onDestroy()
     }
 
     override fun setPresenter(presenter: PublicRepositoriesContract.Presenter) {
