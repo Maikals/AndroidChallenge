@@ -3,7 +3,7 @@ package com.example.miquelcastanys.androidchallenge.presentation.publicRepositor
 import android.content.Context
 import com.example.miquelcastanys.androidchallenge.presentation.base.BasePresenter
 import com.example.miquelcastanys.androidchallenge.presentation.base.BaseView
-import com.example.miquelcastanys.androidchallenge.presentation.model.PublicRepository
+import com.example.miquelcastanys.androidchallenge.presentation.model.presentation.PublicRepository
 
 
 interface PublicRepositoriesContract {

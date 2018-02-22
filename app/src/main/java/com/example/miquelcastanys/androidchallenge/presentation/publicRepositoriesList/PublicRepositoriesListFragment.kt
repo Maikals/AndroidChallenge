@@ -19,7 +19,7 @@ import com.example.miquelcastanys.androidchallenge.presentation.dialogs.UrlDialo
 import com.example.miquelcastanys.androidchallenge.presentation.enumerations.EmptyViewModel
 import com.example.miquelcastanys.androidchallenge.presentation.interfaces.ActivityFragmentCommunicationInterface
 import com.example.miquelcastanys.androidchallenge.presentation.interfaces.OnListItemLongClicked
-import com.example.miquelcastanys.androidchallenge.presentation.model.PublicRepository
+import com.example.miquelcastanys.androidchallenge.presentation.model.presentation.PublicRepository
 import kotlinx.android.synthetic.main.fragment_public_repositories_list.*
 
 /**

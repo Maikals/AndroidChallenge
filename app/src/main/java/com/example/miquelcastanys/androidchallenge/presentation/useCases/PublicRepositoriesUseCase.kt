@@ -3,7 +3,7 @@ package com.example.miquelcastanys.androidchallenge.presentation.useCases
 import com.example.miquelcastanys.androidchallenge.domain.DomainConstants
 import com.example.miquelcastanys.androidchallenge.domain.data.source.AndroidChallengeSource
 import com.example.miquelcastanys.androidchallenge.domain.data.source.AndroidChallengeSourceImpl
-import com.example.miquelcastanys.androidchallenge.domain.model.PublicRepositoriesResponse
+import com.example.miquelcastanys.androidchallenge.presentation.model.domain.PublicRepositoriesResponse
 import com.example.miquelcastanys.androidchallenge.presentation.base.UseCase
 
 

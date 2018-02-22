@@ -1,6 +1,6 @@
 package com.example.miquelcastanys.androidchallenge.domain.data.source
 
-import com.example.miquelcastanys.androidchallenge.domain.model.PublicRepositoriesResponse
+import com.example.miquelcastanys.androidchallenge.presentation.model.domain.PublicRepositoriesResponse
 
 
 interface AndroidChallengeSource {

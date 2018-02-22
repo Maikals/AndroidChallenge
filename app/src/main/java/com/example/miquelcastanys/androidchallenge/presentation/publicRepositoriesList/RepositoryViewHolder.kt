@@ -4,7 +4,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.example.miquelcastanys.androidchallenge.presentation.interfaces.OnListItemLongClicked
-import com.example.miquelcastanys.androidchallenge.presentation.model.PublicRepository
+import com.example.miquelcastanys.androidchallenge.presentation.model.presentation.PublicRepository
 import kotlinx.android.synthetic.main.repository_view_holder.view.*
 
 

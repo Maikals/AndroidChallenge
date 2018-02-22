@@ -2,7 +2,7 @@ package com.example.miquelcastanys.androidchallenge.domain.data.source
 
 import com.example.miquelcastanys.androidchallenge.domain.DomainConstants
 import com.example.miquelcastanys.androidchallenge.domain.data.api.AndroidChallengeService
-import com.example.miquelcastanys.androidchallenge.domain.model.PublicRepositoriesResponse
+import com.example.miquelcastanys.androidchallenge.presentation.model.domain.PublicRepositoriesResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
