@@ -15,10 +15,11 @@ interface PublicRepositoriesContract {
 
     }
 
-    interface Presenter: BasePresenter<Context, View> {
+    interface Presenter : BasePresenter<Context, View> {
         fun getPublicRepositories()
         fun isLastPage(): Boolean?
         fun getRepositoriesList(): List<PublicRepository>?
-        fun openUrl(url: String)
+        fun openRepositoryUrl(position: Int)
+        fun openOwnerUrl(position: Int)
     }
 }

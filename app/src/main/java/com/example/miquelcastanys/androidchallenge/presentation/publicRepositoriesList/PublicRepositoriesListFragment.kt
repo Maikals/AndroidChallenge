@@ -167,9 +167,9 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
         if (requestCode == URL_DIALOG_REQUEST) {
             when (resultCode) {
                 UrlDialog.RESULT_OWNER -> presenter
-                    ?.openUrl(getRepository(data?.getIntExtra(UrlDialog.POSITION, 0)!!)?.ownerUrl!!)
+                    ?.openOwnerUrl(data?.getIntExtra(UrlDialog.POSITION, 0)!!)
                 UrlDialog.RESULT_REPOSITORY -> presenter
-                    ?.openUrl(getRepository(data?.getIntExtra(UrlDialog.POSITION, 0)!!)?.repositoryUrl!!)
+                    ?.openRepositoryUrl(data?.getIntExtra(UrlDialog.POSITION, 0)!!)
             }
         }
     }
