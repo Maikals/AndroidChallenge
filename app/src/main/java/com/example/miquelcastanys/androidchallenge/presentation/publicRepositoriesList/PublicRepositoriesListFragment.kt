@@ -2,7 +2,6 @@ package com.example.miquelcastanys.androidchallenge.presentation.publicRepositor
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -11,7 +10,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.example.miquelcastanys.androidchallenge.R
 import com.example.miquelcastanys.androidchallenge.presentation.base.BaseFragment
 import com.example.miquelcastanys.androidchallenge.presentation.control.adapter.PublicRepositoriesListAdapter
@@ -19,7 +17,7 @@ import com.example.miquelcastanys.androidchallenge.presentation.dialogs.UrlDialo
 import com.example.miquelcastanys.androidchallenge.presentation.enumerations.EmptyViewModel
 import com.example.miquelcastanys.androidchallenge.presentation.interfaces.ActivityFragmentCommunicationInterface
 import com.example.miquelcastanys.androidchallenge.presentation.interfaces.OnListItemLongClicked
-import com.example.miquelcastanys.androidchallenge.presentation.model.PublicRepository
+import com.example.miquelcastanys.androidchallenge.presentation.model.presentation.PublicRepository
 import kotlinx.android.synthetic.main.fragment_public_repositories_list.*
 
 /**
@@ -37,10 +35,29 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
     private var totalItemCount = 0
     private var pastVisiblesItems = 0
     private var loading: Boolean = false
+    private val onScrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            if (dy > 0) {
+                visibleItemCount = linearLayoutManager.childCount
+                totalItemCount = linearLayoutManager.itemCount
+                pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition()
+                if (!presenter?.isLastPage()!! && !loading) {
+                    if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
+                        loading = true
+                        presenter?.getPublicRepositories()
+                    }
+                }
+            } else if (linearLayoutManager.findLastVisibleItemPosition() == publicRepositoriesRV.adapter.itemCount - 1
+                    && !presenter?.isLastPage()!!) {
+                presenter?.getPublicRepositories()
+                loading = true
+            }
+        }
+    }
 
     companion object {
-        val TAG = "PublicReposListFragment"
-        private val URL_DIALOG_REQUEST: Int = 99
+        const val TAG = "PublicReposListFragment"
+        private const val URL_DIALOG_REQUEST: Int = 99
 
         fun newInstance(): PublicRepositoriesListFragment = PublicRepositoriesListFragment()
     }
@@ -60,29 +77,12 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
     }
 
     private fun scrollRecyclerViewControl() {
-        publicRepositoriesRV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                if (dy > 0) {
-                    visibleItemCount = linearLayoutManager.childCount
-                    totalItemCount = linearLayoutManager.itemCount
-                    pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition()
-                    if (!presenter?.isLastPage()!! && !loading) {
-                        if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
-                            loading = true
-                            presenter?.getPublicRepositories()
-                        }
-                    }
-                } else if (linearLayoutManager.findLastVisibleItemPosition() == publicRepositoriesRV.adapter.itemCount - 1
-                        && !presenter?.isLastPage()!!) {
-                    presenter?.getPublicRepositories()
-                    loading = true
-                }
-            }
-        })
+        publicRepositoriesRV.addOnScrollListener(onScrollListener)
     }
 
     private fun setRefreshView() {
-        publicRepositoriesSwipeRefreshLayout.setOnRefreshListener { presenter?.start()
+        publicRepositoriesSwipeRefreshLayout.setOnRefreshListener {
+            presenter?.start()
             loading = true
         }
     }
@@ -105,6 +105,11 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
         mListener = null
         presenter?.detach()
         presenter = null
+    }
+
+    override fun onDestroyView() {
+        publicRepositoriesRV.removeOnScrollListener(onScrollListener)
+        super.onDestroyView()
     }
 
     override fun setPresenter(presenter: PublicRepositoriesContract.Presenter) {
@@ -161,26 +166,16 @@ class PublicRepositoriesListFragment : BaseFragment(), PublicRepositoriesContrac
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == URL_DIALOG_REQUEST) {
             when (resultCode) {
-                UrlDialog.RESULT_OWNER -> {
-                    val browserIntent = Intent(Intent.ACTION_VIEW,
-                            Uri.parse(getRepository(data?.getIntExtra(UrlDialog.POSITION, 0))?.ownerUrl))
-                    activity.startActivity(browserIntent)
-
-                }
-                UrlDialog.RESULT_REPOSITORY -> {
-                    val browserIntent = Intent(Intent.ACTION_VIEW,
-                            Uri.parse(getRepository(data?.getIntExtra(UrlDialog.POSITION, 0))?.repositoryUrl))
-                    activity.startActivity(browserIntent)
-                }
-
+                UrlDialog.RESULT_OWNER -> presenter
+                    ?.openOwnerUrl(data?.getIntExtra(UrlDialog.POSITION, 0)!!)
+                UrlDialog.RESULT_REPOSITORY -> presenter
+                    ?.openRepositoryUrl(data?.getIntExtra(UrlDialog.POSITION, 0)!!)
             }
         }
     }
 
-    private fun getRepository(position: Int?): PublicRepository? =
-            if (publicRepositoriesRV.adapter is PublicRepositoriesListAdapter)
-                (publicRepositoriesRV.adapter as PublicRepositoriesListAdapter).getItem(position)
-            else null
+    private fun getRepository(position: Int): PublicRepository? =
+            presenter?.getRepositoriesList()!![position]
 
     override fun onItemLongClick(position: Int) {
         Log.d(TAG, "List Item $position clicked")

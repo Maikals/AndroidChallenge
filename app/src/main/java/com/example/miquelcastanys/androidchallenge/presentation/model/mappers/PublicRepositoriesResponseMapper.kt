@@ -1,7 +1,7 @@
 package com.example.miquelcastanys.androidchallenge.presentation.model.mappers
 
-import com.example.miquelcastanys.androidchallenge.domain.model.PublicRepositoriesResponse
-import com.example.miquelcastanys.androidchallenge.presentation.model.PublicRepository
+import com.example.miquelcastanys.androidchallenge.presentation.model.domain.PublicRepositoriesResponse
+import com.example.miquelcastanys.androidchallenge.presentation.model.presentation.PublicRepository
 
 object PublicRepositoriesResponseMapper {
 

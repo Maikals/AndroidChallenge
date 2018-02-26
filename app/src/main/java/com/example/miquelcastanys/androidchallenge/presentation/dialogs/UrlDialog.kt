@@ -12,10 +12,10 @@ import com.example.miquelcastanys.androidchallenge.presentation.base.BaseDialog
 class UrlDialog : BaseDialog() {
 
     companion object {
-        val TAG = "UrlDialog"
-        val RESULT_REPOSITORY: Int = 1
-        val RESULT_OWNER: Int = 2
-        val POSITION: String = "position"
+        const val TAG = "UrlDialog"
+        const val RESULT_REPOSITORY: Int = 1
+        const val RESULT_OWNER: Int = 2
+        const val POSITION: String = "position"
 
         fun newInstance(position: Int): UrlDialog {
             val bundle = Bundle()

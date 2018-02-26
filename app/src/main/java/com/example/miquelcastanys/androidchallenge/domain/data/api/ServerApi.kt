@@ -1,6 +1,6 @@
 package com.example.miquelcastanys.androidchallenge.domain.data.api
 
-import com.example.miquelcastanys.androidchallenge.domain.model.PublicRepositoriesResponse
+import com.example.miquelcastanys.androidchallenge.presentation.model.domain.PublicRepositoriesResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

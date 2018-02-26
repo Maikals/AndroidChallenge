@@ -16,8 +16,8 @@ class MainActivity : BaseActivity(), ActivityFragmentCommunicationInterface {
     private var currentTag: String? = null
 
     companion object {
-        val TAG: String = "MainActivity"
-        private val CURRENT_FRAGMENT_TAG: String = "currentTag"
+        const val TAG: String = "MainActivity"
+        private const val CURRENT_FRAGMENT_TAG: String = "currentTag"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

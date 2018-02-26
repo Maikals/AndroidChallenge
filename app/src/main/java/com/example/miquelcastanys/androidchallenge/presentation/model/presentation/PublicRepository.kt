@@ -1,4 +1,4 @@
-package com.example.miquelcastanys.androidchallenge.presentation.model
+package com.example.miquelcastanys.androidchallenge.presentation.model.presentation
 
 import android.os.Parcel
 import android.os.Parcelable
